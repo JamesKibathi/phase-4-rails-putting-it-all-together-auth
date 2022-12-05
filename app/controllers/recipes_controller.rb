@@ -3,12 +3,12 @@ class RecipesController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_recipe 
     
     def index
-        recipes=Recipe.all
-        render json: recipes, status: :created
+        render json: Recipe.all 
     end
 
     def create
-        recipe=Recipe.create!(recipe_params)
+        user=User.find(session[:user_id])
+        recipe=Recipe.create!(user_id:user.id,title:params[:title],instructions:params[:instructions],minutes_to_complete:params[:minutes_to_complete])
         render json: recipe, serializer:RecipesSerializer, status: :created  
     end
 
