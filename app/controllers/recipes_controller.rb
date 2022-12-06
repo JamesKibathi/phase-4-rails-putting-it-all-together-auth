@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_recipe 
     
     def index
-        render json: Recipe.all 
+        render json: Recipe.all, include: ["user"]
     end
 
     def create
